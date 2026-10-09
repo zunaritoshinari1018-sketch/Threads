@@ -29,6 +29,8 @@ APIキーはサーバー側の `.env` またはホスティング環境のSecret
 
 リポジトリ直下に `render.yaml` を用意しています。Render側の [Dashboard](https://dashboard.render.com/) で **New → Blueprint** を選び、この公開リポジトリの `arena/03dabfb5-threads` ブランチを指定すると、Nodeサービスを作成できます。RenderのBlueprint作成時に `APP_USERNAME` と `APP_PASSWORD` を求められるので、他サービスと使い回さない強い値をRenderのSecret欄に設定してください。値をGitHubやチャットへ貼らないでください。
 
+RenderのBuild Commandは `npm ci --include=dev && npm run build` です。`NODE_ENV=production` がビルド時にも適用される場合、通常の `npm ci` だと開発依存のViteが省略されるため、明示的に含めます。
+
 アプリ本体と `/api/*` はHTTP Basic認証で保護し、`/healthz` だけをホスティングの稼働確認用に公開します。APIキーは初期デプロイ設定に含めていません。必要なら、認証保護を確認した後に、RenderのEnvironment画面へ `.env.example` の必要なAPI環境変数だけをSecretとして追加してください。Renderのサービス作成・認証情報設定が完了すると、Renderが公開URLを発行します。
 
 データベース／ユーザー別アカウントはなく、各利用者のブラウザー内 `localStorage` に保存します。Basic認証は共有パスワードであり、個別ユーザー管理ではありません。サービスを作成する前のコード準備段階では、まだ公開URLは発行されていません。
